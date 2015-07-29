@@ -10,9 +10,9 @@ tasks.withType(JavaCompile) {
 
 jar {
     manifest {
-      attributes 'Implementation-Title': baseName
-      attributes 'Implementation-Version': version
-      attributes 'Main-Class': 'com.github.harry0000.FitDataDuplicator'
+        attributes 'Implementation-Title': baseName
+        attributes 'Implementation-Version': version
+        attributes 'Main-Class': 'com.github.harry0000.FitDataDuplicator'
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
