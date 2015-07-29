@@ -1,21 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-jar {
-    baseName = 'FitDataDuplicator'
-}
-
-eclipse {
-    project {
-        name = 'FitDataDuplicator'
-    }
-}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+      attributes 'Implementation-Title': baseName
+      attributes 'Implementation-Version': version
+      attributes 'Main-Class': 'com.github.harry0000.FitDataDuplicator'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 repositories {
