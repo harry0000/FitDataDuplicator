@@ -3,8 +3,8 @@ This is a sample code for reading and writing FIT file using the FIT SDK.
 
 # What is this?
 
-Garmin Edge等で使用されているFITファイル(.fit ファイル)のデータをFIT SDKでデコードし、得られたオブジェクトを新しく作成したファイルにエンコードするサンプルコードです。  
-バイナリレベルで全く同じFITファイルが新たに作成されます。
+Garmin Edge等で使用されているFITファイル(.fit ファイル)のデータをFIT SDKでデコードし、取得したデータを新しく作成したファイルにエンコードするサンプルコードです。  
+バイナリレベルで全く同じFITファイルを新規作成します。
 
 - Ant+ FIT SDK  
 http://www.thisisant.com/resources/fit
@@ -22,9 +22,11 @@ http://www.thisisant.com/resources/fit
 # ビルド方法
 
 - C＃  
-Visual Studio 2013以降で[```cs/FitDataDuplicator.sln```](./cs/FitDataDuplicator.sln)を開き、ビルドしてください。
+Visual Studio 2013以降が必要です。  
+Visual Studioで[```cs/FitDataDuplicator.sln```](./cs/FitDataDuplicator.sln)を開いてビルドしてください。
 
 - Java  
+Java SE 8が必要です。
 
   - Gradleがインストールされている環境
 
