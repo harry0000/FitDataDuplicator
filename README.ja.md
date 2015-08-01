@@ -26,11 +26,11 @@ http://www.thisisant.com/resources/fit
 ### C&#35;
 
 Visual Studio 2013以降が必要です。  
-Visual Studioで[```cs/FitDataDuplicator.sln```](./cs/FitDataDuplicator.sln)を開いてビルドしてください。
+Visual Studioで`cs/FitDataDuplicator.sln`を開いてビルドしてください。
 
 ### Java
 
-Java SE 8が必要です。
+JDK 8が必要です。
 
 - Gradleがインストールされている環境
 
