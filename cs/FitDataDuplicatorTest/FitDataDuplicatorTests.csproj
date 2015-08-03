@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -52,12 +56,43 @@
   <ItemGroup>
     <Compile Include="ProgramTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DuplicatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FitDataDuplicator\FitDataDuplicator.csproj">
       <Project>{7394b084-5187-4955-9664-e9928de2631f}</Project>
       <Name>FitDataDuplicator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FitFiles\Activity.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\MonitoringFile.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\Settings.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WeightScaleMultiUser.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WeightScaleSingleUser.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WorkoutCustomTargetValues.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WorkoutIndividualSteps.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WorkoutRepeatGreaterThanStep.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="FitFiles\WorkoutRepeatSteps.fit">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

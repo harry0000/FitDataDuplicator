@@ -33,7 +33,7 @@ public class Duplicator implements MesgDefinitionListener, MesgListener {
      * @return
      * @throws IOException
      */
-    private static Header getHeader(final InputStream src) throws IOException {
+    protected static Header getHeader(final InputStream src) throws IOException {
         final Header header = new Header();
         header.readHeader(src);
         return header;
@@ -63,8 +63,8 @@ public class Duplicator implements MesgDefinitionListener, MesgListener {
             return false;
         }
 
+        // Write header and mesg.
         boolean result = false;
-        // Copy mesg.
         try (final FileInputStream src = new FileInputStream(srcFile);
              final FileOutputStream dest = new FileOutputStream(destFile)) {
 
@@ -75,12 +75,13 @@ public class Duplicator implements MesgDefinitionListener, MesgListener {
             return false;
         }
 
-        // Append CRC.
+        // Write CRC.
         try (final RandomAccessFile dest = new RandomAccessFile(destFile, "rw")) {
             int crc = 0;
-            for (long i = 0; i < dest.length(); i++) {
-                crc = CRC.get16(crc, (byte) dest.read());
-             }
+            int data;
+            while ((data = dest.read()) > -1) {
+                crc = CRC.get16(crc, (byte) data);
+            }
             dest.write((int) (crc & 0xFF));
             dest.write((int) ((crc >> 8) & 0xFF));
         } catch (final Exception e) {
@@ -157,4 +158,19 @@ public class Duplicator implements MesgDefinitionListener, MesgListener {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * @return the header
+     */
+    public Header getHeader() {
+        return header;
+    }
+
+    /**
+     * @param header the header to set
+     */
+    public void setHeader(Header header) {
+        this.header = header;
+    }
+
 }

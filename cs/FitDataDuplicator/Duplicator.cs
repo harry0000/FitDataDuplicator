@@ -60,9 +60,36 @@ namespace FitDataDuplicator
             }
 
             // Store MesgDefinition.
-            mesgDefinitions[e.mesgDef.LocalMesgNum] = e.mesgDef;
+            var mesgDef = e.mesgDef;
+            mesgDefinitions[mesgDef.LocalMesgNum] = mesgDef;
 
-            e.mesgDef.Write(fitDest);
+            if (mesgDef.IsBigEndian)
+            {
+                // Fit.BigEndian
+                BinaryWriter bw = new BinaryWriter(fitDest);  
+                bw.Write((byte)(mesgDef.LocalMesgNum + Fit.MesgDefinitionMask));
+                bw.Write((byte)Fit.MesgDefinitionReserved);
+                bw.Write((byte)Fit.BigEndian);
+                bw.Write((byte)(mesgDef.GlobalMesgNum >> 8));
+                bw.Write((byte)mesgDef.GlobalMesgNum);
+                bw.Write(mesgDef.NumFields);
+
+                if (mesgDef.NumFields != mesgDef.GetFields().Count)
+                {
+                    throw new FitException("MesgDefinition:Write - Field Count Internal Error");
+                }
+                foreach (var fieldDef in mesgDef.GetFields())
+                {
+                    bw.Write(fieldDef.Num);
+                    bw.Write(fieldDef.Size);
+                    bw.Write(fieldDef.Type);
+                }
+            }
+            else
+            {
+                // Fit.LittleEndian
+                mesgDef.Write(fitDest);
+            }
         }
 
         static void OnMesg(object sender, MesgEventArgs e)
