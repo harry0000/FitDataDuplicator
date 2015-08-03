@@ -11,12 +11,12 @@ namespace FitDataDuplicator
 {
     public class Duplicator
     {
-        readonly static MesgDefinition[] mesgDefinitions = new MesgDefinition[Fit.MaxLocalMesgs];
-        static Stream fitDest;
+        readonly MesgDefinition[] mesgDefinitions = new MesgDefinition[Fit.MaxLocalMesgs];
+        Stream fitDest;
 
-        private Duplicator() { }
+        public Duplicator() { }
 
-        public static bool Duplicate(Stream dest, Stream src)
+        public bool Duplicate(Stream dest, Stream src)
         {
             var decode = new Decode();
             if (!decode.CheckIntegrity(src))
@@ -32,8 +32,8 @@ namespace FitDataDuplicator
             header.Write(fitDest);
 
             // Copy body.
-            decode.MesgDefinitionEvent += OnMesgDefinition;
-            decode.MesgEvent += OnMesg;
+            decode.MesgDefinitionEvent += this.OnMesgDefinition;
+            decode.MesgEvent += this.OnMesg;
             var result = decode.Read(src);
 
             // Update header. (data size)
@@ -52,7 +52,7 @@ namespace FitDataDuplicator
             return result;
         }
 
-        static void OnMesgDefinition(object sender, MesgDefinitionEventArgs e)
+        void OnMesgDefinition(object sender, MesgDefinitionEventArgs e)
         {
             if (fitDest == null)
             {
@@ -92,7 +92,7 @@ namespace FitDataDuplicator
             }
         }
 
-        static void OnMesg(object sender, MesgEventArgs e)
+        void OnMesg(object sender, MesgEventArgs e)
         {
             if (fitDest == null)
             {

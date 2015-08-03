@@ -43,7 +43,7 @@ namespace FitDataDuplicator
 
                     using (var dest = new FileStream(GetDestFilePath(src.Name), FileMode.Create, FileAccess.ReadWrite))
                     {
-                        var result = Duplicator.Duplicate(dest, src);
+                        var result = new Duplicator().Duplicate(dest, src);
                         Console.WriteLine("\"{0}\" is duplicated. result: {1}", src.Name, result);
                     }
                 }

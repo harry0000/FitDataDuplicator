@@ -13,7 +13,8 @@ namespace FitDataDuplicatorTests
             using (var src = new FileStream(fitFilePath, FileMode.Open, FileAccess.Read))
             using (var dest = new MemoryStream())
             {
-                Duplicator.Duplicate(dest, src);
+                var result = new Duplicator().Duplicate(dest, src);
+                Assert.AreEqual(result, true);
                 NUnit.Framework.FileAssert.AreEqual(dest, src);
             }
         }
