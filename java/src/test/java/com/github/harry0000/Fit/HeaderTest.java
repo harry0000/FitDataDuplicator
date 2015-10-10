@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class HeaderTest {
     private static final byte[] HEADER_WITH_CRC = { 0x0E, 0x10, 0x2B, 0x03, 0x00, 0x00, 0x00, 0x00, 0x2E, 0x46, 0x49, 0x54, 0x07, (byte) 0xFA };
 
     @Test
-    public void testReadHeader() {
+    public void readHeader() throws IOException {
         try (final ByteArrayInputStream in = new ByteArrayInputStream(HEADER_WITH_CRC)) {
             final Header h = new Header();
             h.readHeader(in);
@@ -25,13 +26,11 @@ public class HeaderTest {
             assertThat(h.getDataSize(),        is((int) 0x00000000));
             assertThat(h.getDataType(),        is(".FIT"));
             assertThat(h.getCRC(),             is((short) 0xFA07));
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
     }
 
     @Test
-    public void testUpdateDataSize() {
+    public void updateDataSize() throws IOException {
         final int expected = 123456;
 
         try (final ByteArrayInputStream in = new ByteArrayInputStream(HEADER)) {
@@ -40,13 +39,11 @@ public class HeaderTest {
 
             h.setDataSize(expected);
             assertThat(h.getDataSize(), is(expected));
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
     }
 
     @Test
-    public void testUpdateCRC() {
+    public void updateCRC() throws IOException {
         try (final ByteArrayInputStream in = new ByteArrayInputStream(HEADER)) {
             final Header h = new Header();
             h.readHeader(in);
@@ -54,37 +51,30 @@ public class HeaderTest {
 
             h.updateCRC();
             assertThat(h.getCRC(), is((short) 0xFA07));
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
     }
 
     @Test
-    public void testIsValid() {
+    public void isValid() throws IOException {
         try (final ByteArrayInputStream in = new ByteArrayInputStream(HEADER)) {
             final Header h = new Header();
             h.readHeader(in);
 
             assertThat(h.isValid(), is(true));
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
     }
 
     @Test
-    public void testWriteHeader() {
+    public void writeHeader() throws IOException {
         final Header h = new Header();
         try (final ByteArrayInputStream in = new ByteArrayInputStream(HEADER_WITH_CRC)) {
             h.readHeader(in);
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
 
         try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             h.writeHeader(out);
             assertArrayEquals(HEADER_WITH_CRC, out.toByteArray());
-        } catch (Exception e) {
-            fail("Exception: " + e);
         }
     }
+
 }

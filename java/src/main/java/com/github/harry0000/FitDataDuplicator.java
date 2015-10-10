@@ -20,26 +20,34 @@ public class FitDataDuplicator {
      * @return
      */
     protected static String GetDestFilePath(final File srcFile) {
-        final Path p = srcFile.toPath();
-        final String name = p.getFileName().toString();
+        final Path srcPath = srcFile.toPath();
+        final String name = srcPath.getFileName().toString();
         final int idx = name.indexOf('.');
-        if (idx >= 0) {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(p.getParent().toString())
-              .append("\\")
-              .append(name.substring(0, idx))
-              .append(DEST_FILE_SUFFIX)
-              .append(name.substring(idx));
-            return sb.toString();
+        if (idx < 0) {
+            return srcFile.getPath() + DEST_FILE_SUFFIX;
         }
 
-        return srcFile.getPath() + DEST_FILE_SUFFIX;
+        final StringBuilder sb = new StringBuilder();
+        final Path parent = srcPath.getParent();
+        if (parent != null) {
+            final String path = parent.toString();
+            sb.append(path);
+            if (!"\\".equals(path)) {
+                sb.append('\\');
+            }
+        }
+
+        sb.append(name.substring(0, idx))
+          .append(DEST_FILE_SUFFIX)
+          .append(name.substring(idx));
+
+        return sb.toString();
     }
 
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         for (final String arg : args) {
             final File fitFile = new File(arg);
             if (!fitFile.exists()) {

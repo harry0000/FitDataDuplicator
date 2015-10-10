@@ -30,72 +30,70 @@ public class DuplicatorTest {
 
     /**
      * @param fitFile
+     * @throws IOException 
      */
-    private static void testWrite(final InputStream fitFile) {
-        try {
-            final byte[] actuals = toByteArray(fitFile);
-            final ByteArrayOutputStream dest = new ByteArrayOutputStream(4096);
+    private static void write(final InputStream fitFile) throws IOException {
+        final byte[] actuals = toByteArray(fitFile);
+        final ByteArrayOutputStream dest = new ByteArrayOutputStream(4096);
 
-            final Duplicator duplicator = new Duplicator();
-            duplicator.setHeader(Duplicator.getHeader(new ByteArrayInputStream(actuals)));
-            final boolean result = duplicator.write(dest, new ByteArrayInputStream(actuals));
+        final Duplicator duplicator = new Duplicator();
+        duplicator.setHeader(Duplicator.getHeader(new ByteArrayInputStream(actuals)));
+        final boolean result = duplicator.write(dest, new ByteArrayInputStream(actuals));
 
-            // Write CRC.
-            dest.write(actuals[actuals.length - 2]);
-            dest.write(actuals[actuals.length - 1]);
+        // Write CRC.
+        dest.write(actuals[actuals.length - 2]);
+        dest.write(actuals[actuals.length - 1]);
 
-            assertThat(result, is(true));
-            assertArrayEquals(dest.toByteArray(), actuals);
-        } catch (IOException e) {
-            fail("Exception: " + e);
-        }
+        assertThat(result, is(true));
+        assertArrayEquals(dest.toByteArray(), actuals);
     }
 
     // It fails the test because of data(or SDK).
 /*
     @Test
-    public void testWrite_Activity() {
-        testWrite(getClass().getResourceAsStream("Activity.fit"));
+    public void writeActivity() throws IOException {
+        write(getClass().getResourceAsStream("Activity.fit"));
     }
 
     @Test
-    public void testWrite_MonitoringFile() {
-        testWrite(getClass().getResourceAsStream("MonitoringFile.fit"));
+    public void writeMonitoringFile() throws IOException {
+        write(getClass().getResourceAsStream("MonitoringFile.fit"));
     }
 */
 
     @Test
-    public void testWrite_Settings() {
-        testWrite(getClass().getResourceAsStream("Settings.fit"));
+    public void writeSettings() throws IOException {
+        write(getClass().getResourceAsStream("Settings.fit"));
     }
 
     @Test
-    public void testWrite_WeightScaleMultiUser() {
-        testWrite(getClass().getResourceAsStream("WeightScaleMultiUser.fit"));
+    public void writeWeightScaleMultiUser() throws IOException {
+        write(getClass().getResourceAsStream("WeightScaleMultiUser.fit"));
     }
 
     @Test
-    public void testWrite_WeightScaleSingleUser() {
-        testWrite(getClass().getResourceAsStream("WeightScaleSingleUser.fit"));
+    public void writeWeightScaleSingleUser() throws IOException {
+        write(getClass().getResourceAsStream("WeightScaleSingleUser.fit"));
     }
 
     @Test
-    public void testWrite_WorkoutCustomTargetValues() {
-        testWrite(getClass().getResourceAsStream("WorkoutCustomTargetValues.fit"));
+    public void writeWorkoutCustomTargetValues() throws IOException {
+        write(getClass().getResourceAsStream("WorkoutCustomTargetValues.fit"));
     }
 
     @Test
-    public void testWrite_WorkoutIndividualSteps() {
-        testWrite(getClass().getResourceAsStream("WorkoutIndividualSteps.fit"));
+    public void writeWorkoutIndividualSteps() throws IOException {
+        write(getClass().getResourceAsStream("WorkoutIndividualSteps.fit"));
     }
 
     @Test
-    public void testWrite_WorkoutRepeatGreaterThanStep() {
-        testWrite(getClass().getResourceAsStream("WorkoutRepeatGreaterThanStep.fit"));
+    public void writeWorkoutRepeatGreaterThanStep() throws IOException {
+        write(getClass().getResourceAsStream("WorkoutRepeatGreaterThanStep.fit"));
     }
 
     @Test
-    public void testWrite_WorkoutRepeatSteps() {
-        testWrite(getClass().getResourceAsStream("WorkoutRepeatSteps.fit"));
+    public void writeWorkoutRepeatSteps() throws IOException {
+        write(getClass().getResourceAsStream("WorkoutRepeatSteps.fit"));
     }
+
 }

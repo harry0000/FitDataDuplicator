@@ -11,7 +11,7 @@ import com.garmin.fit.Fit;
 
 public class Header {
 
-    private static enum Format {
+    private enum Format {
         HEADER_SIZE(0, 1),
         PROTOCOL_VERSION(1, 1),
         PROFILE_VERSION(2, 2),
