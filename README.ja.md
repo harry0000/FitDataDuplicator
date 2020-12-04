@@ -1,7 +1,7 @@
 # FitDataDuplicator
 FIT SDK sample code for reading and writing FIT file.
 
-See also http://qiita.com/harry0000/items/5931bbbf3d5b68fe8bc0
+See also https://github.com/harry0000/QiitaPosts/blob/master/article/2015/08/01/5931bbbf3d5b68fe8bc0.md
 
 # What is this?
 
